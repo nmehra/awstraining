@@ -99,7 +99,7 @@ for e.g. ssh -i awstraining.pem ec2-user@52.26.195.25
 1. Ensure that the other like the username and password are also the same as you provided.
 1. Navigate to cd ~/awstraining-master/backbone-app/
 1. restart server by typing: node index.js &
-1. navigate in your local browser to http://\<public ip:3001\>/person.
+1. navigate in your local browser to http://\<public ip\>:3001/person.
 1. Add a person by giving details.
 1. Observe the network call in the inspect window.
 1. Open sql prompt to see the record of the person created are shown.
