@@ -1,6 +1,6 @@
 # Exercise 1
 ## Login to AWS
-1. Navigate to the AWS url in chrome.
+1. Navigate to the AWS url in chrome: https://cloudthat-training.signin.aws.amazon.com/console 
 1. Use one of the login id, password provided.
 1. Click on Services -> EC2 link.
 
@@ -10,7 +10,7 @@
 1. Click Add Tag -> key=name and value=webserver 
 1. Click Next:Configure Security Group.
 1. For the existing ssh rule select source= anywhere
-1. Click Add Rule -> Select type=custom tcp and source=anywhere
+1. Click Add Rule -> Select type=custom tcp, port range=3001 and source=anywhere
 1. Click Review and Launch
 1. Choose Create a new key pair, give a key pair name (e.g. awstraining.pem) and download it to a safe location on your computer, and then choose Launch Instances. Note the name of the .pem filename. It will be used in the next step
 
@@ -54,7 +54,7 @@ for e.g. ssh -i awstraining.pem ec2-user@52.26.195.25
 
 ## Hello World
 1. Navigate to the EC2 dashboard and find the public ip of the webserver
-1. Navigate to http://\<public ip:3001\>/hello to see the hello world page.
+1. Navigate to http://\<public ip\>:3001/hello to see the hello world page.
 
 # Exercise 1a
 ## Create an S3 bucket
@@ -62,13 +62,9 @@ for e.g. ssh -i awstraining.pem ec2-user@52.26.195.25
 1. provide a bucket name for e.g. my-sample-bucket-nitin and click next. 
 1. In step 3, in the section manage public permissions select read and write for Objects. Click next 
 1. Click on create bucket.
-1. Upload an image to the s3 bucket.
-2. Access S3 bucket using the browser.
-## Create and download access keys
-1. Navigate to Services -> IAM -> Security Status -> Delete your root access keys section.
-1. Click: manage security credentials -> continue to security credentials -> Access Keys -> Create New Access Key
-1. Click: Show Access key; Download key file and keep it safe. 
-1. We are going to use this key and secret to programmatically access the S3 bucket from the ec2 instance.
+1. Upload an image to the s3 bucket. 
+1. Access image by clicking on the link.
+1. Now give all users read access and try accessing the image again.
 
 # Exercise 2
 ## Create an RDS instance
@@ -87,20 +83,23 @@ for e.g. ssh -i awstraining.pem ec2-user@52.26.195.25
 1. Select source as: anywhere.
 ## Connect to the RDS instance using mysql client from your ec2 instance.
 1. SSH into your EC2 instance created.
-1. Run the following script to install mysql client: yum install mysql 
+1. Run the following script to install mysql client: sudo yum install mysql 
 1. Execute the following command to connect to your db instance: mysql -u admin  -h \<rds server instance\> -p
 1. Provide the password given.
 1. the sql prompt should be shown.
 
 ## Create tables by running the scripts
-1. Click open sql script: createtable.sql and execute it on sql prompt to create the required tables.
+1. Open createtable.sql from https://drive.google.com/drive/folders/0B9HYjqo3Gh2KSmE5RFFyNHdiYTQ 
+1. Execute it on sql prompt to create the required tables.
 
 ## Connect application with rds instance
 1. Stop server on the terminal if its already running.
-1. Open ~/awstraining-master/backbone-app/server/upload.js and uncomment line 3.
-1. restart server by typing: node index.js
+1. Type: vi ~/awstraining-master/backbone-app/server/person.js and uncomment line 1.
+1. Type: vi ~/awstraining-master/backbone-app/server/connection.js and edit the host variable to be the name of the RDS instance created for e.g. my-test-db1.cajocrvonnlr.us-east-2.rds.amazonaws.com.
+1. Ensure that the other like the username and password are also the same as you provided.
+1. Navigate to cd ~/awstraining-master/backbone-app/
+1. restart server by typing: node index.js &
 1. navigate in your local browser to http://\<public ip:3001\>/person.
-1. Add a person by giving details and choosing an image path.
-1. Observe the details of the person entered are shown below.
-1. Open workbench and try to see if the details entered have been created.
-1. Open S3 page to see if the image uploaded is there.
+1. Add a person by giving details.
+1. Observe the network call in the inspect window.
+1. Open sql prompt to see the record of the person created are shown.
